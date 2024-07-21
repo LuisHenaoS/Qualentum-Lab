@@ -1,0 +1,30 @@
+Vagrant.configure("2") do |config|
+  # definición del host especial
+  config.vm.define "bastion" do |bastion|
+    # box que usaremos
+    bastion.vm.box = "ubuntu/trusty64"
+    # interfaz de red pública para que el bastión tenga acceso
+    bastion.vm.network "public_network"
+    # interfaz de red privada. Estática por conflicto con DHCP por si hay varios adaptadores en vm. Se gana seguridad y se pierde escalabilidad
+    bastion.vm.network "private_network", ip: "192.168.56.100"
+    # nombre del host
+    bastion.vm.hostname = "bastion"
+    # provisión a la máquina bastión usando un script de shell
+    bastion.vm.provision "shell", path: "provision_bastion"
+    # forward, puerto 8080 del host al puerto 8080 virtual
+    bastion.vm.network "forwarded_port", guest: 8080, host: 8080
+    # lo mismo con el puerto 22 (SSH) al puerto 2222 en la máquina host
+    bastion.vm.network "forwarded_port", guest: 22, host: 2222, id: "ssh"
+  end
+
+  # bucle para la creación de 5 máquinas
+  (1..5).each do |i|
+    config.vm.define "web#{i}" do |web|
+      # mismo procedimiento que en el host pero con web en vez de bastion e inyectando el bucle y una pequeña suma al mismo en la ip
+      web.vm.box = "ubuntu/trusty64"
+      web.vm.network "private_network", ip: "192.168.56.10#{i}"
+      web.vm.hostname = "web#{i}"
+      web.vm.provision "shell", path: "provision_web"
+    end
+  end
+end
