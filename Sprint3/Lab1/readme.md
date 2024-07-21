@@ -3,7 +3,7 @@
 Este proyecto utiliza Vagrant para gestionar varias máquinas virtuales (VM) que actúan como servidores web y un bastión que funciona como un balanceador de carga. 
 La configuración de red y la gestión de las VM se realizan a través de scripts de aprovisionamiento.
 
-## Requisitos Previos
+# Requisitos Previos
 
 Para ejecutar este proyecto, necesitarás tener instalados los siguientes programas en tu máquina local:
 
@@ -17,6 +17,9 @@ El proyecto está compuesto por los siguientes archivos:
 - `Vagrantfile`: Define la configuración de las máquinas virtuales.
 - `provision_bastion`: Script de aprovisionamiento para el bastión.
 - `provision_web`: Script de aprovisionamiento para los servidores web.
+
+
+# corrección de errores
 
 Si no funciona bien recuerda dar permisos a los archivos -> 
       - `chmod +x provision_web`  
