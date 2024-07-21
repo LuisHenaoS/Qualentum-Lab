@@ -18,7 +18,9 @@ El proyecto está compuesto por los siguientes archivos:
 - `provision_bastion`: Script de aprovisionamiento para el bastión.
 - `provision_web`: Script de aprovisionamiento para los servidores web.
 
-Si no funciona bien recuerda dar permisos a los archivos -> chmod +x provision_web y chmod +x provision_bastion
+Si no funciona bien recuerda dar permisos a los archivos -> 
+      - `chmod +x provision_web`  
+      - `chmod +x provision_bastion`
 
 
 En caso de error con el balanceador de carga del archivo `provision_web` ejecutar en terminal de manera manual el aprovisionamiento --> 
