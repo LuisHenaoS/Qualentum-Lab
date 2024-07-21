@@ -19,9 +19,9 @@ El proyecto está compuesto por los siguientes archivos:
 - `provision_web`: Script de aprovisionamiento para los servidores web.
 
 
-# corrección de errores
+# Corrección de errores
 
-Si no funciona bien recuerda dar permisos a los archivos -> 
+Proveer de permisos a los archivos -> 
       - `chmod +x provision_web`  
       - `chmod +x provision_bastion`
 
