@@ -22,20 +22,20 @@ Si no funciona bien recuerda dar permisos a los archivos -> chmod +x provision_w
 
 
 En caso de error con el balanceador de carga del archivo `provision_web` ejecutar en terminal de manera manual el aprovisionamiento --> 
-`vagrant provision web1
-vagrant provision web2
-vagrant provision web3
-vagrant provision web4
-vagrant provision web5`
+- `vagrant provision web1`
+- `vagrant provision web2`
+- `vagrant provision web3`
+- `vagrant provision web4`
+- `vagrant provision web5`
 
 También cuenta con echo's para log de vagrant `export VAGRANT_LOG=debug`
 
 Para probar conectividad del bastion:
-`vagrant ssh bastion
-curl http://web1
-curl http://web2
-curl http://web3
-curl http://web4
-curl http://web5`
+- `vagrant ssh bastion`
+- `curl http://web1`
+- `curl http://web2`
+- `curl http://web3`
+- `curl http://web4`
+- `curl http://web5`
 
  y el status de nginx: `sudo service nginx status`
