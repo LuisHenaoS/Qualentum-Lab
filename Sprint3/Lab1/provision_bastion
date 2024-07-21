@@ -1,0 +1,57 @@
+#!/bin/bash
+# script se ejecuta en la máquina virtual del bastión para configurar Nginx como un balanceador de carga
+
+# update de paquetes del sistema
+sudo apt-get update
+
+# instalación de Nginx. Será nuestro servidor y balanceador de carga
+sudo apt-get install -y nginx
+
+# seteo estático para asegurar correcta distribución
+cat <<EOF | sudo tee -a /etc/hosts
+192.168.56.101 web1
+192.168.56.102 web2
+192.168.56.103 web3
+192.168.56.104 web4
+192.168.56.105 web5
+EOF
+
+# en orden se explicarán los siguientes puntos:
+
+    # balanceo de carga entre los 5 servidores web.
+        # definición de los servers para distribuir la carga
+
+    # configuración proxy y del balanceador de carga
+        # configuración para las solicitudes (location)
+
+        # serán enviadas a 'web_servers'
+        # setea los header que serán request HTTP al servidor de destino
+        # mantiene el header host original de la request
+        # agrega X-Real-IP con la dirección IP
+        # agrega X-Forwarded-For con las direcciones IP
+        # agrega X-Forwarded-Proto con el esquema de la request (http o https)
+
+cat <<EOF | sudo tee /etc/nginx/sites-available/default
+upstream web_servers {
+    server web1;
+    server web2;
+    server web3;
+    server web4;
+    server web5;
+}
+
+server {
+    listen 8080;
+
+    location / {
+        proxy_pass http://web_servers;
+        proxy_set_header Host \$host;  
+        proxy_set_header X-Real-IP \$remote_addr;  
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;  
+        proxy_set_header X-Forwarded-Proto \$scheme;
+    }
+}
+EOF
+
+# reinicio para aplicar los cambios
+sudo service nginx restart
