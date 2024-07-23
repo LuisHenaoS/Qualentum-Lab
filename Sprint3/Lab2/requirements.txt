@@ -1,0 +1,6 @@
+boto3~=1.34.146
+moto
+click~=8.1.7
+pytest
+pytest-mock
+botocore~=1.34.146
