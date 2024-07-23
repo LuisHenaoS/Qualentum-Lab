@@ -5,7 +5,7 @@ Incluye tests con boto3.**
 
 # Requisitos
 
-- `**SDK Python 3.11.9**`: Se recomienda usar esta versión para asegurar la compatibilidad con todas las dependencias. Aunque con la versión 3.4 en adelante debería bastar.
+- `SDK Python 3.11.9`: Se recomienda usar esta versión para asegurar la compatibilidad con todas las dependencias. Aunque con la versión 3.4 en adelante debería bastar.
 
   # Comandos
 
