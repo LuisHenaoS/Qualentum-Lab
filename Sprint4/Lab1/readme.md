@@ -1,7 +1,7 @@
 
-# Project: Network Configuration with Vagrant and VirtualBox
+# Network Configuration with Vagrant and VirtualBox
 
-## Project Description
+## Description
 
 This project sets up a network environment using Vagrant and VirtualBox to create three virtual machines: `bastion`, `web1`, and `web2`. The goal is to establish a private network where `web1` and `web2` can communicate exclusively through the `bastion` machine, which acts as a bridge or bastion host.
 
