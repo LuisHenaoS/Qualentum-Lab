@@ -17,34 +17,33 @@ config.vm.synced_folder "C:/Users/luiis/Desktop", "/home/vagrant/sync"
 
 ### Pasos para Ejecutar la Aplicación
 
-1. **Levantar la máquina virtual**
+1. **VM up**
    
    Inicia la vm desde vagrantfile:
    ```sh
    vagrant up
    ```
 
-2. **Copiar la Aplicación**
+2. **Copiamos el archivo app.py**
    
    Dentro de la vm, copia el archivo donde hayas guardado app.py del proyecto desde la carpeta compartida a `/home/vagrant/` porque ahí están los certificados. En mi caso es así:
    ```sh
    cp /home/vagrant/sync/desktop/lab4_4/app.py /home/vagrant/
    ```
 
-3. **Iniciar Nginx**
+3. **Inicia Nginx**
    
-   Inicia el servicio Nginx:
    ```sh
    sudo systemctl start nginx
    ```
 
 4. **Abre una Segunda Terminal para los Logs de Gunicorn**
    
-   Abre una segunda terminal y accede a la máquina virtual:
+   Después accede a la máquina virtual:
    ```sh
    vagrant ssh
    ```
-   Después inicia Gunicorn para poder visualizar los logs:
+   Luego inicia Gunicorn para poder visualizar los logs:
    ```sh
    gunicorn -b 0.0.0.0:8888 app:app --access-logfile -
    ```
