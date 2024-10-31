@@ -1,6 +1,6 @@
 ## Flask con Gunicorn y Nginx en Vagrant
 
-Este proyecto configura un entorno de desarrollo de una aplicación Flask. Mediante Gunicorn y gestionada con Nginx como gateway. Todo esto se hace dentro de una máquina virtual Vagrant para replicar un entorno de producción básico.
+Este proyecto configura un entorno de desarrollo de una aplicación Flask. Mediante Gunicorn y gestionada con Nginx como gateway. Todo esto se hace dentro de una máquina virtual Vagrant para replicar un entorno de producción básico. El objetivo es redireccionar el tráfico http a https con un reverse proxy gestionado por nginx. Gunicorn gestionará el tráfico y nos hará de log.
 
 ## Requisitos
 
