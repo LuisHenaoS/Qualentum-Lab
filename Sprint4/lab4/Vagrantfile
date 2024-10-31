@@ -6,47 +6,44 @@ Vagrant.configure("2") do |config|
         vb.cpus = 2
     end
 
-  # Configuración de la carpeta compartida (opcional)
+  # colocamos en la primera ruta la carpeta que contenga el archivo app.py del proyecto para poder copiarlo fácil dentro de vagrant. En mi caso es el escritorio
     config.vm.synced_folder "C:/Users/luiis/Desktop", "/home/vagrant/sync"
 
-  # Script de aprovisionamiento optimizado
+  # aprovisionamiento
     config.vm.provision "shell", inline: <<-SHELL
-    # Actualizar repositorio solo si es necesario
+
     sudo apt update
 
-  # Instalar curl solo si no está ya instalado
+  # todos los aprovisionamientos se instalarán solo si no lo están
   if ! command -v curl > /dev/null; then
     sudo apt install -y curl
   fi
 
-  # Instalar vim solo si no está ya instalado
   if ! command -v vim > /dev/null; then
     sudo apt install -y vim
   fi
 
-  # Instalar Nginx solo si no está ya instalado
   if ! command -v nginx > /dev/null; then
     sudo apt install -y nginx
   fi
 
-  # Instalar pip3 solo si no está ya instalado
   if ! command -v pip3 > /dev/null; then
     sudo apt install -y python3-pip
   fi
 
-  # Instalar Gunicorn y Flask solo si no están ya instalado
   if ! python3 -m pip show flask > /dev/null 2>&1; then
     pip3 install gunicorn flask werkzeug
   fi
 
-  # Generar certificados SSL solo si no existen
+  # certificados ssl. Contiene una gestión de permisos como corrección de errores
   if [ ! -f /home/vagrant/cert.pem ] || [ ! -f /home/vagrant/key.pem ]; then
     openssl req -x509 -newkey rsa:4096 -nodes -out /home/vagrant/cert.pem -keyout /home/vagrant/key.pem -days 365 -subj "/CN=local.qualentum.org"
 
     sudo chmod 644 /home/vagrant/cert.pem /home/vagrant/key.pem
   fi
 
-  # Configuración de Nginx solo si no existe el archivo de configuración
+  # genera en la carpeta descrita un archivo que contendrá el reverse proxy encargado de redirigir el tráfico a peticiones http a https.
+  # crea un nuevo archivo en llamado flask_app y borra la carpeta default para evitar conflictos producidos en tests
 if [ ! -f /etc/nginx/sites-available/flask_app ]; then
   cat <<'EOF' | sudo tee /etc/nginx/sites-available/flask_app > /dev/null
   server {
@@ -73,7 +70,6 @@ if [ ! -f /etc/nginx/sites-available/flask_app ]; then
   }
 EOF
 
-      # Activar configuración de Nginx y reiniciar el servicio
       sudo ln -s /etc/nginx/sites-available/flask_app /etc/nginx/sites-enabled/
       sudo rm -f /etc/nginx/sites-enabled/default
       sudo nginx -t && sudo systemctl restart nginx
