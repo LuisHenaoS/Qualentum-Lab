@@ -1,0 +1,65 @@
+if [ -n "$_AUTODEPS_DISABLE_AUTO_DOWNLOAD" ]; then
+    echo "[INFO] autodeps desactivado porque existe la variable de entorno _AUTODEPS_DISABLE_AUTO_DOWNLOAD"
+    return 0
+fi
+
+if [ -f ".lock_autodeps" ]; then
+    echo "[INFO] existe archivo .lock_autodeps, no se ejecutara el script autodeps"
+    return 0
+fi
+
+TIMESTAMP_FILE=".last_autodep_update"
+
+if [ -f "$TIMESTAMP_FILE" ]; then
+    ultima_actualizacion=$(date -r "$TIMESTAMP_FILE" +%s)
+    tiempo_actual=$(date +%s)
+    tiempo_transcurrido=$((tiempo_actual - ultima_actualizacion))
+
+    if [ "$tiempo_transcurrido" -lt 3600 ]; then
+        echo "[INFO] ha pasado menos de una hora desde la ultima ejecucion"
+        return 0
+    fi
+fi
+
+autodeps_timestamp() {
+    date '+%Y-%m-%d %H:%M:%S' > "$TIMESTAMP_FILE"
+    echo "[INFO] Registro de timestamp efectuado en $TIMESTAMP_FILE"
+}
+
+check_maven() {
+    if mvn dependency:resolve > /dev/null 2>&1; then
+        echo "[INFO] Las dependencias Maven ya estan instaladas."
+    else
+        echo "[INFO] iniciando instalacion de Maven"
+        mvn install && autodeps_timestamp
+    fi
+}
+
+check_gradle() {
+    if gradle dependencies > /dev/null 2>&1; then
+        echo "[INFO] Gradle ya esta incorporado"
+    else
+        echo "[INFO] Instalando gradle y dependencias"
+        gradle build && autodeps_timestamp
+    fi
+}
+
+check_pip() {
+    echo "[INFO] Verificando e instalando dependencias de Python.. "
+    pip install -r requirements.txt && autodeps_timestamp
+}
+
+autodeps_main() {
+    if [ -f "pom.xml" ]; then
+        check_maven
+    elif [ -f "build.gradle" ]; then
+        check_gradle
+    elif [ -f "requirements.txt" ]; then
+        check_pip
+    else
+        echo "[INFO] no se han encontrado archivos pom.xml, build gradle o requirements.txt"
+    fi
+}
+
+autodeps_main
+
