@@ -1,13 +1,13 @@
 # Autodeps
 
-Autodeps es un script en bash que gestiona las dependencias de proyectos específicos al detectar archivos como `pom.xml`, `build.gradle` y `requirements.txt`. Diseñado para ejecutarse en un entorno Debian.
+Autodeps es un script en bash que gestiona las dependencias de proyectos específicos al detectar archivos como `pom.xml`, `build.gradle` y `requirements.txt`. Instala las dependencias de manera automática. Diseñado para ejecutarse en un entorno Debian.
 
 *Copia el archivo `autodeps`* en `/usr/local/bin` (en mi caso) o en cualquier directorio de tu `$PATH`
    ```bash
    sudo cp autodeps /usr/local/bin
    sudo chmod +x /usr/local/bin/autodeps
    ```
-*Agrega el archivo `.bashrc` dado a tu `~/.bashrc`* para que al ejecutar `cd` se ejecute autodeps. Después ejecuta ` source ~/.bashrc` para actualizar
+*Agrega el archivo `.bashrc` dado a tu `~/.bashrc`* para que al ejecutar `cd` mediante una función se ejecute autodeps. Después ejecuta ` source ~/.bashrc` para actualizar
    ```bash
    .bashrc > ~/.bashrc
    source ~/.bashrc
