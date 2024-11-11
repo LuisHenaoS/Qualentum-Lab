@@ -9,7 +9,10 @@ Para cada ejecución usa sudo bash: `sudo bash scriptX.sh`
 1. **script1.sh** - Configura los usuarios `usermetrics` y `usersql` con sus permisos y credenciales iniciales en un .txt en su home. Crea un grupo sudo para ambos.
 2. **script2.sh** - Configura los entornos virtuales de Python para ejecutar la API de monitoreo e instala dependencias y herramientas necesarias como `curl`, `jq`, y `mariadb`
 3. **script3.txt** - Intrucciones en txt de cómo continuar y dónde logear. Configuramos el proceso demonio de la api así como configuramos su paradero (app.py)
-4. **script4.sh** - crea la base de datos para almacenar las métricas. **Importante**: Una vez creada la database debemos darle permiso de uso a usersql desde root por configuraciones internas del primer uso de mariadb. El comando es `sudo mysql -u root -p` y después ejecutamos `CREATE USER IF NOT EXISTS 'usersql'@'localhost' IDENTIFIED BY '1234';  -- Asegúrate de que la contraseña coincide con la que está en `credentials_database.txt`
+4. **script4.sh** - crea la base de datos para almacenar las métricas.
+
+    # **Importante**:
+   Una vez creada la database debemos darle permiso de uso a usersql desde root por configuraciones internas del primer uso de mariadb. El comando es `sudo mysql -u root -p` y después ejecutamos `CREATE USER IF NOT EXISTS 'usersql'@'localhost' IDENTIFIED BY '1234';  -- Asegúrate de que la contraseña coincide con la que está en `credentials_database.txt`
 GRANT ALL PRIVILEGES ON *.* TO 'usersql'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;`
  
