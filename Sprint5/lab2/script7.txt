@@ -1,0 +1,26 @@
+# desde userSQL creamos
+
+sudo nano /etc/systemd/system/mariadb.service
+
+# pegamos
+
+[Unit]
+Description=Daemon para base de datos SQL
+After=network.target
+
+[Service]
+User=mysql
+ExecStart=/usr/sbin/mysqld
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+# comprobamos, reiniciamos e iniciamos
+
+sudo systemctl daemon-reload
+sudo systemctl enable mariadb.service
+sudo systemctl start mariadb.service
+
+#opcional comprobar el status
+sudo systemctl status mariadb.service

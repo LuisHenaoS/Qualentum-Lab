@@ -1,0 +1,36 @@
+#logea en userMetrics. Usa sudo passwd usermetrics para darle una password temporal y vuelve a usarlo usando la variable de entorno proporcionada en el archivo .txt dado en su home
+
+# haz cp del archivo proporcionado app.py en /opt/app1/
+
+# es importante la constraseña para usermetrics. Es un fallo de seguridad
+
+# crea /etc/systemd/system/app.service
+sudo vim /etc/systemd/system/app.service
+
+#pega el demonio en ese archivo
+
+[Unit]
+Description=Demonio de la app.py
+After=network.target
+
+[Service]
+User=userMetrics
+WorkingDirectory=/opt/app1/app
+ExecStart=/opt/app1/env/bin/gunicorn -w 4 -b 0.0.0.0:5000 app:app
+Restart=always
+Environment="PATH=/opt/app1/env/bin"
+
+[Install]
+WantedBy=multi-user.target
+
+
+#reload, habilita e inicia  los servicios para que se carguen
+sudo systemctl daemon-reload
+sudo systemctl enable app.service
+sudo systemctl start app.service
+
+#después logea en usersql. Necesitarás el comando sudo passwd usersql para establecer una contraseña nueva temporal hasta que la sustituyas por la generada en tu home.
+
+# antes de ejecutar el script4.sh que es la creación de la database, escribe los valores de user y password en credentials_db.txt
+
+#después ejecuta la creación de la database correspondiente al script4.sh
