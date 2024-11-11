@@ -4,6 +4,8 @@ Este proyecto consiste en la configuración y automatización de un sistema de m
 
 # Estructura de Scripts
 
+Para cada ejecución usa sudo bash: `sudo bash scriptX.sh`
+ 
 1. **script1.sh** - Configura los usuarios `usermetrics` y `usersql` con sus permisos y credenciales iniciales en un .txt en su home. Crea un grupo sudo para ambos.
 2. **script2.sh** - Configura los entornos virtuales de Python para ejecutar la API de monitoreo e instala dependencias y herramientas necesarias como `curl`, `jq`, y `mariadb`
 3. **script3.txt** - Intrucciones en txt de cómo continuar y dónde logear. Configuramos el proceso demonio de la api así como configuramos su paradero (app.py)
@@ -11,12 +13,12 @@ Este proyecto consiste en la configuración y automatización de un sistema de m
 GRANT ALL PRIVILEGES ON *.* TO 'usersql'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;`
  
-6. **script5.sh** - Script que realiza solicitudes a la API y almacena las métricas recolectadas en la base de datos previamente creada.
-7. **script6.sh** - Script que crea una tarea cron global en `/etc/crontab` para ejecutar `script5.sh` cada 3 minutos.
-8. **script7.txt** - Script que configura el daemon de la base de datos que gestiona si que esté siempre arriba aunque se reinicie el sistema o se use otro user, en `systemd`.
+5. **script5.sh** - Script que realiza solicitudes a la API y almacena las métricas recolectadas en la base de datos previamente creada.
+6. **script6.sh** - Script que crea una tarea cron global en `/etc/crontab` para ejecutar `script5.sh` cada 3 minutos.
+7. **script7.txt** - Script que configura el daemon de la base de datos que gestiona si que esté siempre arriba aunque se reinicie el sistema o se use otro user, en `systemd`.
 
 
-Sigue el orden para completar la configuración. Sobretodo si usas vagrant. Se puede seguir el orden directamente desde una máquina debian, si tienes las dependencias las obviará.
+Sigue el orden para completar la configuración. Sobretodo si usas vagrant. Se puede seguir el orden directamente desde una máquina debian, si tienes las dependencias las obviará. Si usas vagrant descarga el archivo modificando la ruta compartida sync y tan solo debes ejecutar los scripts desde la carpeta que hayas proporcionado y contengas los archivos que te paso
 
 
 ---
