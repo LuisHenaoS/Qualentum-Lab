@@ -1,6 +1,6 @@
 # desde userSQL creamos
 
-sudo nano /etc/systemd/system/mariadb.service
+sudo vim /etc/systemd/system/mariadb.service
 
 # pegamos
 
