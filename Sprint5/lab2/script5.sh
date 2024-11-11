@@ -2,8 +2,6 @@
 
 # guarda o copia este script en /opt/app2 estando en usersql
 
-# GET a app.py y lo guarda en formato JSON_DATA
-JSON_DATA=$(curl -s http://localhost:5000/metrics)
 
 DB_CREDENTIALS_FILE="/home/usersql/credentials_database.txt"
 
@@ -14,6 +12,7 @@ else
     exit 1
 fi
 
+# GET a app.py y lo guarda en formato JSON_DATA
 JSON_DATA=$(curl -s http://localhost:5000/metrics)
 
 # usamos jq para el manejo de JSON
