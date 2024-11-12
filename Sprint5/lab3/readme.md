@@ -1,6 +1,13 @@
 ### Ejecución del Playbook
 
-El entorno ha sido desde vsc conectado con wsl he desarrollado el ejercicio. Simplemente ejecutando el comando de abajo funciona sin problemas. En la segunda ejecucón sólo mostrará 1 changed.
+El entorno ha sido desde vsc conectado con wsl he desarrollado el ejercicio. Simplemente ejecutando el comando de abajo funciona sin problemas. 
+
+![example](/Sprint5/lab3/source/1.png)
+
+En la segunda ejecución sólo mostrará 1 changed.
+
+![example](/Sprint5/lab3/source/2.png)
+
 
 ```bash
 ansible-playbook -i inventory/hosts.yml playbooks/site.yml
