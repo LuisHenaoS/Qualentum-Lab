@@ -1,4 +1,4 @@
-# Ejecución del Playbook
+### Ejecución del Playbook
 
 El entorno ha sido desde vsc conectado con wsl he desarrollado el ejercicio. Simplemente ejecutando el comando de abajo funciona sin problemas. En la segunda ejecucón sólo mostrará 1 changed.
 
@@ -8,7 +8,7 @@ ansible-playbook -i inventory/hosts.yml playbooks/site.yml
 
 Se ejecuta el playbook `site.yml` usando el inventario de `hosts.yml`.
 
-# Descripción
+### Descripción
 
 El playbook realiza las siguientes tareas:
 - Configura dos grupos de hosts: `db` y `ml`
