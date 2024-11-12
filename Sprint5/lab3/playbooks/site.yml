@@ -1,0 +1,45 @@
+---
+- name: Configure DB hosts
+  hosts: db
+  become: yes
+  tasks:
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Create nginx user
+      user:
+        name: nginx
+        state: present
+
+    - name: Create /etc/provisioned file
+      copy:
+        dest: /etc/provisioned
+        content: "Last provisioned: {{ ansible_date_time.date }} {{ ansible_date_time.time }}\n"
+
+- name: Configure ML hosts
+  hosts: ml
+  become: yes
+  tasks:
+    - name: Install python
+      apt:
+        name: python3
+        state: present
+
+    - name: Install pip
+      apt:
+        name: python3-pip
+        state: present
+
+    - name: Install virtualenv
+      pip:
+        name: virtualenv
+
+    - name: Create virtualenv
+      command: virtualenv /opt/ml_env creates=/opt/ml_env/bin/activate
+
+    - name: Install Pandas in virtualenv
+      pip:
+        name: pandas
+        virtualenv: /opt/ml_env
