@@ -2,7 +2,7 @@
 
 Este proyecto consiste en la configuración y automatización de un sistema de monitoreo para recolectar métricas de rendimiento del servidor utilizando una API en Flask, con almacenamiento de datos en una base de datos mariaDB y tareas cron para recolección periódica. Así como procesos demonio para que se ejecute todo en segundo plano de manera efectiva.
 
-![example](Sprint5/lab2/source/Captura de pantalla 2024-11-11 151322.png)
+![example](Sprint5/lab2/source/2.png)
 
 ## Estructura de Scripts
 
