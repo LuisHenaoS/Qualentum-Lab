@@ -1,0 +1,28 @@
+server {
+    listen {{ http_port }};
+    root /var/www/html;
+    index index.php index.html index.htm index.nginx-debian.html;
+    server_name {{ http_host }};
+
+    location / {
+        proxy_pass http://nodos_web_tier;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
+
+upstream nodos_web_tier {
+    server 192.168.100.11;
+    server 192.168.100.12;
+}

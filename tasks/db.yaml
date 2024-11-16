@@ -1,0 +1,73 @@
+---
+- name: Install LAMP DB Packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    update_cache: true
+    cache_valid_time: 3600
+    state: present
+  loop: ['default-mysql-server', 'python3-pymysql']
+
+- name: Start the MySQL service
+  service:
+    name: mysql
+    state: started
+    enabled: true
+
+- name: Copy my.cnf file with root password credentials.
+  template:
+    src: my.cnf.j2
+    dest: /root/.my.cnf
+    owner: root
+    group: root
+    mode: 0400
+
+- name: Set root user password
+  mysql_user:
+    name: root
+    host: "{{ item }}"
+    password: "{{ mysql_root_password }}"
+    check_implicit_admin: true
+    login_unix_socket: "/var/run/mysqld/mysqld.sock"
+    state: present
+  no_log: true
+  with_items:
+    - "{{ inventory_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+
+- name: Delete anonymous MySQL server users
+  mysql_user:
+    user: ""
+    host: "{{ item }}"
+    state: absent
+    login_unix_socket: "/var/run/mysqld/mysqld.sock"
+  no_log: true
+  with_items:
+    - localhost
+    - "{{ inventory_hostname }}"
+    - "{{ ansible_hostname }}"
+
+
+- name: Removes the MySQL test database
+  mysql_db:
+    name: test
+    state: absent
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+
+- name: Creates database for WordPress
+  mysql_db:
+    name: "{{ mysql_db }}"
+    state: present
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+
+- name: Create MySQL user for WordPress
+  mysql_user:
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_password }}"
+    priv: "{{ mysql_db }}.*:ALL"
+    state: present
+    login_user: root
+    login_password: "{{ mysql_root_password }}"

@@ -1,0 +1,5 @@
+---
+mysql_root_password: ""   # contraseña del user root
+mysql_db: ""    # name de la database que haremos
+mysql_user: ""    # user que crearemos que gestionará la db
+mysql_password: ""      # pass de la database que haremos
