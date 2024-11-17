@@ -1,0 +1,28 @@
+---
+- name: Install Web packages - Apache and PHP
+  hosts: web
+  become: true
+  vars_files:
+    - vars/web.yaml
+  tasks:
+    - include_tasks: tasks/web.yaml
+  handlers:
+    - include: handlers/web.yaml
+
+- name: Install and create a database
+  hosts: db
+  become: true
+  vars_files:
+    - vars/db.yaml
+  tasks:
+    - include_tasks: tasks/db.yaml
+
+- name: Install nginx and configuration
+  hosts: lb
+  become: true
+  vars_files:
+    - vars/web.yaml
+  tasks:
+    - include_tasks: tasks/lb.yaml
+  handlers:
+    - include: handlers/nginx.yaml    

@@ -1,0 +1,6 @@
+---
+app_user: ""  # escribe el usuario web
+http_host: "example.com"
+http_conf: "example.com.conf"
+http_port: "80"
+disable_default: true
