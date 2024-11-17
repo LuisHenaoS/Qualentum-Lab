@@ -16,7 +16,7 @@ Se pueden hacer todo de pruebas entrando en cada nodo. Recuerda la distribución
 Una vez levantado se puede hacer todo tipo de pruebas como peticiones, entrar a la database, modificar el tráfico.. Pero todo en su correspondiente nodo. 
 
 
-![example](/Sprint5/lab4/source/1.png)
+![example](/Sprint5/Lab4/source/1.png)
 
 
 Se puede lanzar tanto desde windows como desde linux.
