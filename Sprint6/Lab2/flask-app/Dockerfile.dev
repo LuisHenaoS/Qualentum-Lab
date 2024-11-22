@@ -1,0 +1,12 @@
+FROM python:3.10
+
+WORKDIR /flask-app
+
+COPY requirements.txt /flask-app/
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . /flask-app/
+
+EXPOSE 5001
+
+CMD ["gunicorn", "-b", "0.0.0.0:5001", "app:app"]

@@ -1,0 +1,19 @@
+FROM alpine:3.17
+
+WORKDIR /flask-app
+
+COPY requirements.txt /flask-app/
+
+RUN apk add --no-cache python3 py3-pip build-base zlib-dev jpeg-dev python3-dev && \
+    adduser -D appuser && \
+    pip3 install --no-cache-dir -r requirements.txt && \
+    chown -R appuser /flask-app
+
+
+COPY app.py /flask-app/
+USER appuser
+
+ARG EXPOSED_PORT 8080
+
+EXPOSE ${EXPOSED_PORT}
+CMD gunicorn --bind 0.0.0.0:${EXPOSED_PORT} app:app
