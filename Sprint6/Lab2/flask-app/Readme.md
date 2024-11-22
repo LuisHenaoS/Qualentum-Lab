@@ -1,4 +1,4 @@
-# Dockerización de un app flask
+# Dockerización de una app flask
 
 Este lab simula dos fases de un proyecto. 
 
