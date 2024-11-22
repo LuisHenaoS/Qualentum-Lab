@@ -31,4 +31,4 @@ Para construir el contenedor:
     `docker run -e EXPOSED_PORT=8000 -p 8000:8000 -ti (imagen)` Podemos cambiar mediante variable de entorno el puerto.
 Para que se pueda probar hay que definir el puerto (-p):
 
-![example](/Sprint6/Lab2/flask-app/source/2.png)
+![example](/Sprint6/Lab2/flask-app/src/4.png)
