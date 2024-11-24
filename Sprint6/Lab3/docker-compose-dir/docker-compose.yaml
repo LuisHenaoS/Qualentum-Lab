@@ -1,0 +1,54 @@
+---
+version: "3"
+networks:
+  qualentum: {}
+
+services:
+  redis:
+    image: redis
+    networks:
+      - qualentum
+
+  app1:
+    depends_on: #https://docs.docker.com/compose/how-tos/startup-order/#control-startup
+      - redis
+    build: app1/
+    networks:
+      - qualentum
+    healthcheck: #https://docs.docker.com/reference/compose-file/services/#healthcheck
+      test: ["CMD", "nc", "-z", "0.0.0.0", "5000"]
+      interval: 5s
+      timeout: 3s
+      retries: 2
+    deploy: #https://docs.docker.com/reference/compose-file/deploy/#replicas
+      replicas: 5
+
+  app2:
+    depends_on:
+      redis:
+        condition: service_started
+      app1:
+        condition: service_healthy
+        restart: true
+    deploy:
+      replicas: 5
+    build: app2/
+    networks:
+      - qualentum
+    healthcheck:
+      test: ["CMD", "nc", "-z", "0.0.0.0", "5000"]
+      interval: 5s
+      timeout: 3s
+      retries: 2
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - 8080:8080
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - qualentum
+    depends_on:
+      app2:
+        condition: service_healthy
