@@ -28,4 +28,4 @@ En cada parte del código suministro la fuente donde fue encontrada la info. Com
 
 - Hubieron unos cuantos más errores previos pero olvidé documentar. Al final el ejercicio funciona:
 
-![example](/Sprint6/Lab3/docker-composer-dir/src/4.png)
+![example](/Sprint6/Lab3/docker-compose-dir/src/4.png)
