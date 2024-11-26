@@ -15,7 +15,7 @@ kubectl apply -f app1.yaml
 kubectl apply -f app2.yaml 
 ```
 
-2. Verifica de que todos los Pods estén Running y los servicios disponibles:
+2. Verifica de que todos los Pods estén Running y los servicios disponibles. (No como en el caso de la foto. Era por error en el código de python. Se resube el registry desde docker y se relanza de nuevo en kubernetes)
 
 ```bash
 kubectl get pods
