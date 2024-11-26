@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app2-deployment
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: app2
+  template:
+    metadata:
+      labels:
+        app: app2
+    spec:
+      containers:
+      - name: app2
+        image: luiishs/qualentum_app2:0.1.0
+        ports:
+        - containerPort: 5000
+        env:
+        - name: APP1_HOST
+          value: "app1-service"
+        - name: REDIS_HOST
+          value: "redis-service"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app2-service
+spec:
+  selector:
+    app: app2
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 5000
+  type: ClusterIP # https://kubernetes.io/docs/concepts/services-networking/cluster-ip-allocation/
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app2-nodeport-service
+spec:
+  selector:
+    app: app2
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+      nodePort: 30002
+  type: NodePort
